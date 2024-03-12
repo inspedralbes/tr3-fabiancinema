@@ -1,0 +1,36 @@
+{
+    "peliculas": [
+        {
+            "titulo": "Shrek",
+            "director": "Andrew Adamson, Vicky Jenson",
+            "genero": "Animation, Adventure, Comedy",
+            "duracion": 90,
+            "fecha": 2001,
+            "portada": "https://m.media-amazon.com/images/M/MV5BOGZhM2FhNTItODAzNi00YjA0LWEyN2UtNjJlYWQzYzU1MDg5L2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg"
+        },
+        {
+            "titulo": "Torrente, el brazo tonto de la ley",
+            "director": "Santiago Segura",
+            "genero": "Action, Comedy, Crime",
+            "duracion": 97,
+            "fecha": 1998,
+            "portada": "https://m.media-amazon.com/images/M/MV5BZWIyNmZmNWItZmExNS00MzA5LTk1ZTgtY2EyOTVlNWMzN2UwL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyMTA0MjU0Ng@@._V1_SX300.jpg"
+        },
+        {
+            "titulo": "Cars",
+            "director": "John Lasseter, Joe Ranft",
+            "genero": "Animation, Comedy, Family",
+            "duracion": 117,
+            "fecha": 2006,
+            "portada": "https://m.media-amazon.com/images/M/MV5BMTg5NzY0MzA2MV5BMl5BanBnXkFtZTYwNDc3NTc2._V1_SX300.jpg"
+        },
+        {
+            "titulo": "Toy Story 3",
+            "director": "Lee Unkrich",
+            "genero": "Animation, Adventure, Comedy",
+            "duracion": 103,
+            "fecha": 2010,
+            "portada": "https://m.media-amazon.com/images/M/MV5BMTgxOTY4Mjc0MF5BMl5BanBnXkFtZTcwNTA4MDQyMw@@._V1_SX300.jpg"
+        }
+    ]
+}
