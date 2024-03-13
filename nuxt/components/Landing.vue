@@ -1,6 +1,7 @@
 <template>
   <div class="landing">
     <h1 class="title">CINE FABIÁN</h1>
+    <h2 class="subtitle">PRÒXIMES SESSIONS</h2>
     <div v-if="peliculas.length" class="movie-container">
       <div v-for="pelicula in peliculas" :key="pelicula.id" class="pelicula">
         <div class="info-pelicula">
@@ -52,6 +53,12 @@ export default {
 }
 
 .title {
+  font-size: 2rem;
+  margin-top: 40px;
+  margin-bottom: -1vw;
+}
+
+.subtitle {
   font-size: 2rem;
   margin-top: 40px;
   margin-bottom: -1vw;
