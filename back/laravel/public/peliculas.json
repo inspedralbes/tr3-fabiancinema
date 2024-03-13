@@ -31,6 +31,14 @@
             "duracion": 103,
             "fecha": 2010,
             "portada": "https://m.media-amazon.com/images/M/MV5BMTgxOTY4Mjc0MF5BMl5BanBnXkFtZTcwNTA4MDQyMw@@._V1_SX300.jpg"
+        },
+        {
+            "titulo": "Inazuma Eleven: The Movie",
+            "director": "Akihiro Hino",
+            "genero": "Animation, Comedy, Family",
+            "duracion": 90,
+            "fecha": 2010,
+            "portada": "https://m.media-amazon.com/images/M/MV5BMzUwY2NmMzEtYWI3Zi00NmUyLWExZjktNDI4NjM3ZTMwNDcwXkEyXkFqcGdeQXVyNjAwNjg0MTM@._V1_SX300.jpg"
         }
     ]
 }
