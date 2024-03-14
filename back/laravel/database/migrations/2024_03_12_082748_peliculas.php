@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('director');
             $table->string('genero');
             $table->integer('duracion');
-            $table->integer('fecha');
+            $table->date('fecha');
             $table->string('portada');
             $table->timestamps();
         });

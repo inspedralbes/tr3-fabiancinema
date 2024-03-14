@@ -21,10 +21,10 @@ class Peliculas extends Seeder
                     'director' => $item['director'],
                     'genero' => $item['genero'],
                     'duracion' => $item['duracion'],
-                    'fecha' => $item['fecha'],
+                    'fecha' => \Carbon\Carbon::createFromFormat('Y', $item['fecha'])->format('Y-m-d'),
                     'portada' => $item['portada'],
                 ]);
-            }            
+            }
         } else {
             echo "El archivo peliculas.json no existe en la carpeta public.";
         }
