@@ -1,6 +1,6 @@
 <template>
   <div class="landing">
-    <h1 class="title">CINE FABIÁN</h1>
+    <h1 class="title">Cines Kinépolis Barcelona Splau</h1>
     <h2 class="subtitle">PRÒXIMES SESSIONS</h2>
     <div v-if="peliculas.length" class="movie-container">
       <div v-for="pelicula in peliculas" :key="pelicula.id" class="pelicula">
@@ -9,8 +9,9 @@
             <div class="movie-details" @click="goToAnotherComponent">
             <h2 class="movie-title">{{ pelicula.titulo }}</h2>
             <p class="movie-info">{{ pelicula.fecha }}</p>
-            <p class="movie-info">Director: {{ pelicula.director }}</p>
-            <p class="movie-info">Género: {{ pelicula.genero }}</p>
+            <div v-for="sesion in sesiones" :key="sesion.id">
+              <p class="movie-info">{{ sesion.hora }}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -23,10 +24,12 @@ export default {
   data() {
     return {
       peliculas: [],
+      sesiones: [],
     };
   },
   mounted() {
     this.obtenerPeliculas();
+    this.obtenerSesiones();
   },
   methods: {
     async obtenerPeliculas() {
@@ -39,6 +42,18 @@ export default {
         this.peliculas = data;
       } catch (error) {
         console.error("Error al obtener las películas:", error);
+      }
+    },
+    async obtenerSesiones() {
+      try {
+        const response = await fetch("http://localhost:8000/api/sesiones");
+        if (!response.ok) {
+          throw new Error("No se pudo obtener la lista de sesiones");
+        }
+        const data = await response.json();
+        this.sesiones = data;
+      } catch (error) {
+        console.error("Error al obtener las sesiones:", error);
       }
     },
     comprarEntradas() {},
@@ -68,7 +83,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  height: 89vh;
+  height: 85vh;
   width: 95vw;
   align-items: center;
 }
