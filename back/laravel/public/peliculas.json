@@ -39,6 +39,14 @@
             "duracion": 90,
             "fecha": 2010,
             "portada": "https://m.media-amazon.com/images/M/MV5BMzUwY2NmMzEtYWI3Zi00NmUyLWExZjktNDI4NjM3ZTMwNDcwXkEyXkFqcGdeQXVyNjAwNjg0MTM@._V1_SX300.jpg"
+        },
+        {
+            "titulo": "Project X",
+            "director": "Nima Nourizadeh",
+            "genero": "Comedy",
+            "duracion": 88,
+            "fecha": 2012,
+            "portada": "https://m.media-amazon.com/images/M/MV5BMTc1MTk0Njg4OF5BMl5BanBnXkFtZTcwODc0ODkyNw@@._V1_SX300.jpg"
         }
     ]
 }

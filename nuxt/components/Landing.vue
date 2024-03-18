@@ -4,16 +4,10 @@
     <h2 class="subtitle">PRÒXIMES SESSIONS</h2>
     <div v-if="peliculas.length" class="movie-container">
       <div v-for="pelicula in peliculas" :key="pelicula.id" class="pelicula">
-        <div class="info-pelicula">
-          <img :src="pelicula.portada" :alt="pelicula.titulo" class="cover-image" />
-            <div class="movie-details" @click="goToAnotherComponent">
-            <h2 class="movie-title">{{ pelicula.titulo }}</h2>
-            <p class="movie-info">{{ pelicula.fecha }}</p>
-            <div v-for="sesion in sesiones" :key="sesion.id">
-              <p class="movie-info">{{ sesion.hora }}</p>
-            </div>
-          </div>
-        </div>
+        <!-- <nuxt-link :to="'/entradas/' + pelicula.id_pelicula" class="movie-link"> -->
+          <nuxt-link :to="{ name: 'entradas-id_pelicula', params: { id_pelicula: pelicula.id_pelicula } }" class="movie-link">
+            <ficha-pelicula :pelicula="pelicula" />
+          </nuxt-link>
       </div>
     </div>
   </div>
@@ -56,7 +50,9 @@ export default {
         console.error("Error al obtener las sesiones:", error);
       }
     },
-    comprarEntradas() {},
+    comprarEntradas() {
+
+    }
   },
 };
 </script>
@@ -113,7 +109,6 @@ export default {
 }
 
 .cover-image {
-  
   width: 100%;
   height: 100%;
   border-radius: 5px 5px 5px 5px;
@@ -125,11 +120,19 @@ export default {
 
 .movie-title {
   font-size: 1.2rem;
-  margin-bottom: 5px;
+}
+
+.movie-subtitle {
+  font-size: 1rem;
+  margin-top: 0;
 }
 
 .movie-info {
   margin-bottom: 5px;
 }
 
+.movie-link {
+  color:inherit;
+  text-decoration: none;
+}
 </style>
