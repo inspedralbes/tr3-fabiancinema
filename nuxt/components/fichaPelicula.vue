@@ -1,15 +1,15 @@
 <template>
-  <div>
+  <div v-if="pelicula">
     <div class="info-pelicula">
-            <img :src="pelicula.portada" :alt="pelicula.titulo" class="cover-image" />
-            <div class="movie-details">
-              <h2 class="movie-title">{{ pelicula.titulo }}</h2>
-              <h3 class="movie-subtitle">{{ calcularDuracion(pelicula.duracion) }}</h3>
-              <p class="movie-info">{{ pelicula.fecha }}</p>
-              <p class="movie-info">{{ pelicula.director }}</p>
-              <p class="movie-info">{{ pelicula.genero }}</p>
-            </div>
-          </div>
+      <img :src="pelicula.portada" :alt="pelicula.titulo" class="cover-image" />
+      <div class="movie-details">
+        <h2 class="movie-title">{{ pelicula.titulo }}</h2>
+        <h3 class="movie-subtitle">{{ calcularDuracion(pelicula.duracion) }}</h3>
+        <p class="movie-info">{{ pelicula.fecha }}</p>
+        <!-- <p class="movie-info">{{ pelicula.director }}</p> -->
+        <!-- <p class="movie-info">{{ pelicula.genero }}</p> -->
+      </div>
+    </div>
   </div>
 </template>
 
@@ -22,18 +22,59 @@ export default {
     },
   },
   methods: {
-    
     calcularDuracion(duracion) {
       const horas = Math.floor(duracion / 60);
       const minutos = duracion % 60;
       return `${horas}h ${minutos}min`;
     }
   },
-
-  }
-
+}
 </script>
 
 <style>
+.info-pelicula {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
 
+.pelicula:hover {
+  transform: translateY(-5px);
+}
+
+.cover-image {
+  width: 16vw;
+  height: 46vh;
+  border-radius: 5px 5px 5px 5px;
+  margin-right: 1vh;
+  margin-left: 1vh;
+  margin-top: 1vh;
+}
+
+.movie-details {
+  padding: 10px;
+  margin-bottom: 10px;
+  margin-top: 2vh;
+}
+
+.movie-title {
+  font-size: 1.2rem;
+  margin-top: 5px;
+}
+
+.movie-subtitle {
+  font-size: 1rem;
+  margin-top: 0;
+}
+
+.movie-info {
+  margin-bottom: -5px;
+}
+
+.movie-link {
+  color: inherit;
+  text-decoration: none;
+}
 </style>

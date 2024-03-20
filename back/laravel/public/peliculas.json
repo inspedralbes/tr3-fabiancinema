@@ -47,6 +47,30 @@
             "duracion": 88,
             "fecha": 2012,
             "portada": "https://m.media-amazon.com/images/M/MV5BMTc1MTk0Njg4OF5BMl5BanBnXkFtZTcwODc0ODkyNw@@._V1_SX300.jpg"
+        },
+        {
+            "titulo": "Superbad",
+            "director": "Greg Mottola",
+            "genero": "Comedy",
+            "duracion": 113,
+            "fecha": 2007,
+            "portada": "https://m.media-amazon.com/images/M/MV5BY2VkMDg4ZTYtN2M3Yy00NWZiLWE2ODEtZjU5MjZkYWNkNGIzXkEyXkFqcGdeQXVyODY5Njk4Njc@._V1_SX300.jpg"
+        },
+        {
+            "titulo": "Shin Chan: The Adult Empire Strikes Back",
+            "director": "Keiichi Hara",
+            "genero": "Animation, Action, Adventure",
+            "duracion": 90,
+            "fecha": 2001,
+            "portada": "https://m.media-amazon.com/images/M/MV5BNDRhOTY2ZGEtYWVjMy00ZDBmLWI5ODEtNmFjODM0MjI3YTI1XkEyXkFqcGdeQXVyMzY2MDk0MTk@._V1_SX300.jpg"
+        },
+        {
+            "titulo": "Spider-Man: Into the Spider-Verse",
+            "director": "Bob Persichetti, Peter Ramsey, Rodney Rothman",
+            "genero": "Animation, Action, Adventure",
+            "duracion": 117,
+            "fecha": 2018,
+            "portada": "https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_SX300.jpg"
         }
     ]
 }
