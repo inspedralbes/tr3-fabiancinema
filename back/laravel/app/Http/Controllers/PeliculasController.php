@@ -14,12 +14,13 @@ class PeliculasController extends Controller
         return response()->json($peliculas);
     }
     
-    public function show($id)
-    {
-        $pelicula = Pelicula::find($id);
-        if (!$pelicula) {
-            return response()->json(['error' => 'Pelicula no encontrada'], 404);
-        }
-        return response()->json($pelicula);
+    public function show($id_pelicula)
+{   
+    $pelicula = Pelicula::all()->where('id_pelicula', $id_pelicula)->first();
+    if (!$pelicula) {
+        return response()->json(['error' => 'Pelicula no encontrada'], 404);
     }
+    return response()->json($pelicula);
+}
+
 }

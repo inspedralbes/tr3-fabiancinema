@@ -71,6 +71,14 @@
             "duracion": 117,
             "fecha": 2018,
             "portada": "https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_SX300.jpg"
+        },
+        {
+            "titulo": "The Little Cars in the Great Race",
+            "director": "Cristiano Valente",
+            "genero": "Animation, Short",
+            "duracion": 33,
+            "fecha": 2006,
+            "portada": "https://m.media-amazon.com/images/M/MV5BOWViNmQ4ZTMtNTdjNC00YzU0LTgzZmYtY2Q4MDBlNWZmODUwXkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_SX300.jpg"
         }
     ]
 }

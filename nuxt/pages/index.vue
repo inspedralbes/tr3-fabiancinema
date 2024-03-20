@@ -52,8 +52,9 @@ export default {
       }
     },
     seleccionarPelicula(pelicula) {
-      useStore().setSelectedMovieId(pelicula.id_pelicula)
-      this.$router.push('/entradas/' + pelicula.id_pelicula)
+      const store = useStore();
+      store.setSelectedMovieId(pelicula.id_pelicula);
+      this.$router.push('/entradas/' + pelicula.id_pelicula);
     },
   },
 };

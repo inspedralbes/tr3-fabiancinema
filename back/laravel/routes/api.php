@@ -7,10 +7,12 @@ use App\Http\Controllers\SesionesController;
 use Illuminate\Support\Facades\DB;
 
 Route::get('/peliculas', [PeliculasController::class, 'index']);
+Route::get('/peliculas/{id_pelicula}', [PeliculasController::class, 'show']);
+
 
 Route::get('/sesiones', function () {
     $sesiones = DB::table('sesion')
-        ->join('peliculas', 'sesion.id_pelicula', '=', 'peliculas.id_pelicula')
+        ->join('peliculas', 'sesion.id_pelicula', '=', 'peliculas.id_pelicula') 
         ->select('sesion.*', 'peliculas.titulo')
         ->get();
     return response()->json($sesiones);
