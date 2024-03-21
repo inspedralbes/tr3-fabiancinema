@@ -15,6 +15,7 @@
 
 <script>
 import { useStore } from "../stores/store";
+
 export default {
   data() {
     return {
@@ -51,10 +52,10 @@ export default {
         console.error("Error al obtener las sesiones:", error);
       }
     },
-    seleccionarPelicula(pelicula) {
+    async seleccionarPelicula(pelicula) {
       const store = useStore();
-      store.setSelectedMovieId(pelicula.id_pelicula);
-      this.$router.push('/entradas/' + pelicula.id_pelicula);
+      store.setSelectedMovie(pelicula);
+      this.$router.push({ name: 'entradas-id_pelicula', params: { id_pelicula: pelicula.id_pelicula } });
     },
   },
 };

@@ -1,40 +1,42 @@
 <template>
-  <div>
-    <h1>Sesión</h1>
-    <ficha-pelicula :pelicula="pelicula" />
-    <patio-butacas />
+  <div class="container">
+    <ficha-pelicula :pelicula="pelicula" class="ficha-pelicula" />
+    <patio-butacas class="butacas" />
+    <ficha-sesion :pelicula="pelicula" />
   </div>
 </template>
 
 <script>
 import { useStore } from '../../stores/store'
 import PatioButacas from '@/components/PatioButacas.vue'
+import fichaSesion from '@/components/fichaSesion.vue'
 
 export default {
-  data() {
-    return {
-      pelicula: {},
-    };
-  },
   components: {
     PatioButacas,
+    fichaSesion,
   },
-  async mounted() {
-    const store = useStore();
-    this.pelicula = store.selectedMovieId;
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",pelicula);
-    const id_pelicula = store.selectedMovieId;
-    try {
-      const response = await fetch(`http://localhost:8000/api/peliculas/${id_pelicula}`);
-      if (!response.ok) {
-        throw new Error("No se pudo obtener la película");
-      }
-      const data = await response.json();
-      
-      this.pelicula = data;
-    } catch (error) {
-      console.error("Error al obtener la película:", error);
-    }
+  computed: {
+    pelicula() {
+      const store = useStore();
+      return store.selectedMovie;
+    },
   },
 }
 </script>
+
+<style scoped>
+.container {
+  display: flex;
+}
+
+.ficha-pelicula {
+  margin-left: 1vh;
+  margin-top: 8vw;
+}
+
+.butacas {
+  margin-left: 8vh;
+  margin-top: 10vw;
+}
+</style>

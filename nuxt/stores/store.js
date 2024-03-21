@@ -1,17 +1,18 @@
+// store.js
 import { defineStore } from 'pinia'
 
 export const useStore = defineStore('store', {
   state: () => ({
-    selectedMovieId: null,
+    selectedMovie: null,
   }),
   getters: {
-    getSelectedMovieId() {
-      return this.selectedMovieId
+    getSelectedMovie() {
+      return this.selectedMovie;
     },
   },
   actions: {
-    setSelectedMovieId(movieId) {
-      this.selectedMovieId = movieId
+    setSelectedMovie(movie) {
+      this.selectedMovie = movie;
     },
   },
 })
