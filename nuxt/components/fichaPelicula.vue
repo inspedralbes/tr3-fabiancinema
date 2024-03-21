@@ -6,6 +6,7 @@
         <h2 class="movie-title">{{ pelicula.titulo }}</h2>
         <h3 class="movie-subtitle">{{ calcularDuracion(pelicula.duracion) }}</h3>
         <p class="movie-info">{{ pelicula.fecha }}</p>
+        <fichaSesion :sesion="sesion" :pelicula="pelicula" class="ficha-sesion" />
       </div>
     </div>
   </div>
@@ -13,6 +14,15 @@
 
 <script>
 export default {
+  data() {
+    return {
+      pelicula: null,
+      sesion: null,
+    };
+  },
+  mounted() {
+    this.obtenerSesion();
+  },
   props: {
     pelicula: {
       type: Object,
@@ -20,6 +30,18 @@ export default {
     },
   },
   methods: {
+    async obtenerSesion() {
+      try {
+        const response = await fetch(`http://localhost:8000/api/sesiones/${this.$route.params.id_pelicula}`);
+        if (!response.ok) {
+          throw new Error("No se pudo obtener la sesión");
+        }
+        const data = await response.json();
+        this.sesion = data;
+      } catch (error) {
+        console.error("Error al obtener la sesión:", error);
+      }
+    },
     calcularDuracion(duracion) {
       const horas = Math.floor(duracion / 60);
       const minutos = duracion % 60;

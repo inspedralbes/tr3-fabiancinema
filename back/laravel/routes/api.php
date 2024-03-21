@@ -17,6 +17,17 @@ Route::get('/sesiones', function () {
         ->get();
     return response()->json($sesiones);
 });
+Route::get('/sesiones/{id_sesion}', function ($id_sesion) {
+    $sesion = DB::table('sesion')
+        ->join('peliculas', 'sesion.id_pelicula', '=', 'peliculas.id_pelicula') 
+        ->select('sesion.*', 'peliculas.titulo')
+        ->where('id_sesion', $id_sesion)
+        ->first();
+    if (!$sesion) {
+        return response()->json(['error' => 'Sesion no encontrada'], 404);
+    }
+    return response()->json($sesion);
+});
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

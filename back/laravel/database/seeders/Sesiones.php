@@ -12,27 +12,18 @@ class Sesiones extends Seeder
     public function run()
     {
         $peliculas = Pelicula::pluck('id_pelicula')->toArray();
-        shuffle($peliculas); // Mezclar aleatoriamente las películas
+        shuffle($peliculas);
 
         if (empty($peliculas)) {
             $this->command->info('No hay películas disponibles en la base de datos.');
             return;
         }
 
-        $diaEspectador = Carbon::now()->addDays(0); // Añadir 3 días a partir de hoy para el día del espectador
-
-        $horaSesionDiaEspectador = Carbon::createFromTime(16, 0);
-        Sesion::create([
-            'id_pelicula' => array_shift($peliculas),
-            'dia' => $diaEspectador, // Utiliza Carbon para la fecha del día del espectador
-            'hora' => $horaSesionDiaEspectador->format('H:i'),
-            'dia_espectador' => 1,
-        ]);
-
+        $diaEspectador = Carbon::now()->addDays(0);
         $horasPermitidas = ['16:00', '18:00', '20:00'];
 
-        for ($i = 0; $i < 5; $i++) {
-            if ($i + 1 === $diaEspectador->dayOfWeek) {
+        foreach ($peliculas as $peliculaId) {
+            if (empty($peliculaId)) {
                 continue;
             }
 
@@ -45,17 +36,17 @@ class Sesiones extends Seeder
             $horaSesionNormal->hour = $hour;
             $horaSesionNormal->minute = $minute;
 
-            if (empty($peliculas)) {
+            if (empty($peliculaId)) {
                 break;
             }
 
-            $diaSesionNormal = Carbon::now()->addDays($i + 1); // Añadir días a partir de hoy para la fecha de la sesión normal
+            $diaSesionNormal = Carbon::now()->addDays(1);
 
             Sesion::create([
-                'id_pelicula' => array_shift($peliculas),
-                'dia' => $diaSesionNormal, // Utiliza Carbon para la fecha de la sesión normal
+                'id_pelicula' => $peliculaId,
+                'dia' => $diaSesionNormal,
                 'hora' => $horaSesionNormal->format('H:i'),
-                'dia_espectador' => 0,
+                'dia_espectador' => $diaSesionNormal->dayOfWeek === $diaEspectador->dayOfWeek ? 1 : 0,
             ]);
         }
     }

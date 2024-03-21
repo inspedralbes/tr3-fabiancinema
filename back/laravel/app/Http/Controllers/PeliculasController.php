@@ -10,17 +10,16 @@ class PeliculasController extends Controller
 {
     public function index()
     {
-        $peliculas = Pelicula::inRandomOrder()->take(5)->get();
+        $peliculas = Pelicula::all();
         return response()->json($peliculas);
     }
-    
-    public function show($id_pelicula)
-{   
-    $pelicula = Pelicula::all()->where('id_pelicula', $id_pelicula)->first();
-    if (!$pelicula) {
-        return response()->json(['error' => 'Pelicula no encontrada'], 404);
-    }
-    return response()->json($pelicula);
-}
 
+    public function show($id_pelicula)
+    {
+        $pelicula = Pelicula::all()->where('id_pelicula', $id_pelicula)->first();
+        if (!$pelicula) {
+            return response()->json(['error' => 'Pelicula no encontrada'], 404);
+        }
+        return response()->json($pelicula);
+    }
 }

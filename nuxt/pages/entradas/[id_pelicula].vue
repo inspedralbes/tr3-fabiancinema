@@ -1,8 +1,9 @@
 <template>
   <div class="container">
-    <ficha-pelicula :pelicula="pelicula" class="ficha-pelicula" />
-    <patio-butacas class="butacas" />
-    <ficha-sesion :pelicula="pelicula" />
+    <div class="info-peliculas">
+      <ficha-pelicula :pelicula="pelicula" class="ficha-pelicula" />
+      <patio-butacas class="butacas" />
+    </div>
   </div>
 </template>
 
@@ -16,6 +17,29 @@ export default {
     PatioButacas,
     fichaSesion,
   },
+  data() {
+    return {
+      pelicula: null,
+      sesion: null,
+    };
+  },
+  mounted() {
+    this.obtenerSesion();
+  },
+  methods: {
+    async obtenerSesion() {
+      try {
+        const response = await fetch(`http://localhost:8000/api/sesiones/${this.$route.params.id_pelicula}`);
+        if (!response.ok) {
+          throw new Error("No se pudo obtener la sesión");
+        }
+        const data = await response.json();
+        this.sesion = data;
+      } catch (error) {
+        console.error("Error al obtener la sesión:", error);
+      }
+    },
+  },
   computed: {
     pelicula() {
       const store = useStore();
@@ -27,12 +51,23 @@ export default {
 
 <style scoped>
 .container {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr;
+  /* Una sola columna */
 }
 
 .ficha-pelicula {
   margin-left: 1vh;
   margin-top: 8vw;
+}
+
+.info-peliculas {
+  display: flex;
+  left: 1vh;
+}
+
+.ficha-sesion {
+  margin-top: 0;
 }
 
 .butacas {
