@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="info-peliculas">
-      <ficha-pelicula :pelicula="pelicula" class="ficha-pelicula" />
+      <ficha-pelicula :pelicula="pelicula" :sesion="sesion" class="ficha-pelicula" />
       <patio-butacas class="butacas" />
     </div>
   </div>
@@ -19,7 +19,6 @@ export default {
   },
   data() {
     return {
-      pelicula: null,
       sesion: null,
     };
   },
@@ -29,6 +28,7 @@ export default {
   methods: {
     async obtenerSesion() {
       try {
+        console.log("BBBBBBBBBBBBBBBBBBBBB", this.$route.params.id_pelicula);
         const response = await fetch(`http://localhost:8000/api/sesiones/${this.$route.params.id_pelicula}`);
         if (!response.ok) {
           throw new Error("No se pudo obtener la sesión");

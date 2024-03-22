@@ -79,6 +79,22 @@
             "duracion": 33,
             "fecha": 2006,
             "portada": "https://m.media-amazon.com/images/M/MV5BOWViNmQ4ZTMtNTdjNC00YzU0LTgzZmYtY2Q4MDBlNWZmODUwXkEyXkFqcGdeQXVyNTM3MDMyMDQ@._V1_SX300.jpg"
+        },
+        {
+            "titulo": "Oppenheimer",
+            "director": "Christopher Nolan",
+            "genero": "Biography, Drama, History",
+            "duracion": 180,
+            "fecha": 2023,
+            "portada": "https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_SX300.jpg"
+        },
+        {
+            "titulo": "Barbie",
+            "director": "Greta Gerwig",
+            "genero": "Adventure, Comedy, Fantasy",
+            "duracion": 114,
+            "fecha": 2023,
+            "portada": "https://m.media-amazon.com/images/M/MV5BNjU3N2QxNzYtMjk1NC00MTc4LTk1NTQtMmUxNTljM2I0NDA5XkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_SX300.jpg"
         }
     ]
 }

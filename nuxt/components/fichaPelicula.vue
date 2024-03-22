@@ -14,43 +14,25 @@
 
 <script>
 export default {
-  data() {
-    return {
-      pelicula: null,
-      sesion: null,
-    };
-  },
-  mounted() {
-    this.obtenerSesion();
-  },
   props: {
     pelicula: {
       type: Object,
       required: true,
     },
+    sesion: {
+      type: Object,
+      required: true,
+    },
   },
   methods: {
-    async obtenerSesion() {
-      try {
-        const response = await fetch(`http://localhost:8000/api/sesiones/${this.$route.params.id_pelicula}`);
-        if (!response.ok) {
-          throw new Error("No se pudo obtener la sesión");
-        }
-        const data = await response.json();
-        this.sesion = data;
-      } catch (error) {
-        console.error("Error al obtener la sesión:", error);
-      }
-    },
     calcularDuracion(duracion) {
       const horas = Math.floor(duracion / 60);
       const minutos = duracion % 60;
 
-     console.log(duracion);
       if (horas === 0) {
-        return `${minutos}min`;
+        return `${minutos > 0 ? minutos + 'min' : ''}`;
       } else {
-        return `${horas}h ${minutos}min`;
+        return `${horas}h ${minutos > 0 ? minutos + 'min' : ''}`;
       }
     }
   },

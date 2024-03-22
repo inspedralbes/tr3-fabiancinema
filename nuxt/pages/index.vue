@@ -6,7 +6,7 @@
       <div v-for="pelicula in peliculas" :key="pelicula.id" class="pelicula">
         <nuxt-link :to="{ name: 'entradas-id_pelicula', params: { id_pelicula: pelicula.id_pelicula } }"
           class="movie-link" @click="seleccionarPelicula(pelicula)">
-          <fichaPelicula :pelicula="pelicula" />
+          <fichaPelicula :pelicula="pelicula" :sesion="obtenerSesiones(pelicula.id_pelicula)" />
         </nuxt-link>
       </div>
     </div>
@@ -20,12 +20,10 @@ export default {
   data() {
     return {
       peliculas: [],
-      sesiones: [],
     };
   },
   mounted() {
     this.obtenerPeliculas();
-    this.obtenerSesiones();
   },
   methods: {
     async obtenerPeliculas() {
@@ -40,16 +38,17 @@ export default {
         console.error("Error al obtener las películas:", error);
       }
     },
-    async obtenerSesiones() {
+    async obtenerSesiones(idPelicula) {
       try {
-        const response = await fetch("http://localhost:8000/api/sesiones");
+        const response = await fetch(`http://localhost:8000/api/sesiones/${idPelicula}`);
         if (!response.ok) {
-          throw new Error("No se pudo obtener la lista de sesiones");
+          throw new Error("No se pudo obtener la sesión");
         }
         const data = await response.json();
-        this.sesiones = data;
+        return data;
       } catch (error) {
-        console.error("Error al obtener las sesiones:", error);
+        console.error("Error al obtener la sesión:", error);
+        return null;
       }
     },
     async seleccionarPelicula(pelicula) {
