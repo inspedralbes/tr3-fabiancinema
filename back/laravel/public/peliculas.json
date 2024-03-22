@@ -95,6 +95,14 @@
             "duracion": 114,
             "fecha": 2023,
             "portada": "https://m.media-amazon.com/images/M/MV5BNjU3N2QxNzYtMjk1NC00MTc4LTk1NTQtMmUxNTljM2I0NDA5XkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_SX300.jpg"
+        },
+        {
+            "titulo": "Pokémon: Lucario and the Mystery of Mew",
+            "director": "Kunihiko Yuyama, Darren Dunstan",
+            "genero": "Animation, Action, Adventure",
+            "duracion": 103,
+            "fecha": 2005,
+            "portada": "https://m.media-amazon.com/images/M/MV5BMTUxOTcwNjAwMl5BMl5BanBnXkFtZTgwMjc2MzQ2NjE@._V1_SX300.jpg"
         }
     ]
 }

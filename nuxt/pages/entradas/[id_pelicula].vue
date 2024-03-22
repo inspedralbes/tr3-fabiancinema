@@ -53,7 +53,6 @@ export default {
 .container {
   display: grid;
   grid-template-columns: 1fr;
-  /* Una sola columna */
 }
 
 .ficha-pelicula {
