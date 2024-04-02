@@ -11,42 +11,41 @@ class Sesiones extends Seeder
 {
     public function run()
     {
-        $peliculas = Pelicula::pluck('id_pelicula')->toArray();
-        shuffle($peliculas);
+        // Obtener todas las películas
+        $peliculas = Pelicula::all();
 
-        if (empty($peliculas)) {
+        if ($peliculas->isEmpty()) {
             $this->command->info('No hay películas disponibles en la base de datos.');
             return;
         }
 
-        $diaEspectador = Carbon::now()->addDays(0);
+        // Obtener el día actual
+        $diaActual = Carbon::now();
+
+        // Obtener las horas permitidas para las sesiones
         $horasPermitidas = ['16:00', '18:00', '20:00'];
 
-        foreach ($peliculas as $peliculaId) {
-            if (empty($peliculaId)) {
-                continue;
+        // Iterar sobre las películas
+        foreach ($peliculas as $pelicula) {
+            // Inicializar el día de la sesión
+            $diaSesion = $diaActual->copy();
+
+            // Verificar si ya hay una sesión programada para este día
+            while (Sesion::whereDate('dia', $diaSesion)->exists()) {
+                // Si ya hay una sesión programada para este día, avanzamos al siguiente día
+                $diaSesion->addDay();
             }
 
-            $horaSesionNormal = Carbon::createFromTime(16, 0);
-
+            // Elegir una hora aleatoria entre las horas permitidas
             $horaAleatoria = $horasPermitidas[array_rand($horasPermitidas)];
+            $horaSesion = Carbon::createFromFormat('H:i', $horaAleatoria);
 
-            list($hour, $minute) = explode(':', $horaAleatoria);
-
-            $horaSesionNormal->hour = $hour;
-            $horaSesionNormal->minute = $minute;
-
-            if (empty($peliculaId)) {
-                break;
-            }
-
-            $diaSesionNormal = Carbon::now()->addDays(1);
-
+            // Crear la sesión
             Sesion::create([
-                'id_pelicula' => $peliculaId,
-                'dia' => $diaSesionNormal,
-                'hora' => $horaSesionNormal->format('H:i'),
-                'dia_espectador' => $diaSesionNormal->dayOfWeek === $diaEspectador->dayOfWeek ? 1 : 0,
+                'id_pelicula' => $pelicula->id_pelicula,
+                'dia' => $diaSesion,
+                'hora' => $horaSesion->format('H:i'),
+                'dia_espectador' => $diaSesion->dayOfWeek === Carbon::TUESDAY ? 1 : 0,
             ]);
         }
     }

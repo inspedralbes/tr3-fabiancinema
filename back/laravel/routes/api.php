@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PeliculasController;
 use App\Http\Controllers\SesionesController;
+use App\Http\Controllers\EntradasController;
 use Illuminate\Support\Facades\DB;
 
 Route::get('/peliculas', [PeliculasController::class, 'index']);
@@ -28,6 +29,9 @@ Route::get('/sesiones/{id_sesion}', function ($id_sesion) {
     }
     return response()->json($sesion);
 });
+
+Route::get('/entradas', [EntradasController::class, 'index']);
+Route::post('/entradas', [EntradasController::class, 'store']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

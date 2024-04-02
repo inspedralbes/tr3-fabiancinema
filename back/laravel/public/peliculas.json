@@ -103,6 +103,22 @@
             "duracion": 103,
             "fecha": 2005,
             "portada": "https://m.media-amazon.com/images/M/MV5BMTUxOTcwNjAwMl5BMl5BanBnXkFtZTgwMjc2MzQ2NjE@._V1_SX300.jpg"
+        },
+        {
+            "titulo": "Spider-Man: Across the Spider-Verse",
+            "director": "Joaquim Dos Santos, Kemp Powers, Justin K. Thompson",
+            "genero": "Animation, Action, Adventure",
+            "duracion": 140,
+            "fecha": 2023,
+            "portada": "https://m.media-amazon.com/images/M/MV5BMzI0NmVkMjEtYmY4MS00ZDMxLTlkZmEtMzU4MDQxYTMzMjU2XkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_SX300.jpg"
+        },
+        {
+            "titulo": "Borat",
+            "director": "Larry Charles",
+            "genero": "Comedy",
+            "duracion": 84,
+            "fecha": 2006,
+            "portada": "https://m.media-amazon.com/images/M/MV5BMTk0MTQ3NDQ4Ml5BMl5BanBnXkFtZTcwOTQ3OTQzMw@@._V1_SX300.jpg"
         }
     ]
 }
