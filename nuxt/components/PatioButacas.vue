@@ -3,7 +3,7 @@
     <div class="patio-butacas">
       <div v-for="fila in 7" :key="fila" class="fila">
         <div v-for="(asiento, index) in butacas[fila - 1]" :key="`fila-${fila}-asiento-${index + 1}`" class="asiento"
-             :class="{ vip: asiento.vip, ocupado: asiento.ocupado }" @click="toggleAsiento(asiento)">
+          :class="{ vip: asiento.vip, ocupado: asiento.ocupado }" @click="toggleAsiento(asiento)">
           <img :src="getButacaImage(asiento)" :alt="'Asiento ' + (asiento.vip ? 'VIP' : 'Normal')" />
         </div>
       </div>
@@ -33,7 +33,7 @@ export default {
       for (let fila = 1; fila <= 7; fila++) {
         let filaButacas = [];
         for (let asiento = 1; asiento <= 10; asiento++) {
-          let vip = false; 
+          let vip = false;
 
           if (fila === 4) {
             vip = true;
@@ -41,7 +41,7 @@ export default {
           filaButacas.push({
             vip: vip,
             ocupado: false,
-            fila: fila, // Agregar fila y columna para identificar el asiento
+            fila: fila,
             columna: asiento,
           });
         }
@@ -64,29 +64,28 @@ export default {
       this.mostrarPasarela = this.seleccionados.length > 0;
     },
     comprarEntradas() {
-      // Enviar los asientos seleccionados al backend
-      fetch('http://localhost:8000/api/entradas', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ asientos: this.seleccionados }),
-      })
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Error al comprar entradas');
-        }
-      })
-      .then(data => {
-        // Manejar la respuesta del backend (por ejemplo, mostrar un mensaje de éxito)
-        console.log('Entradas compradas:', data);
-      })
-      .catch(error => {
-        // Manejar cualquier error que ocurra al comunicarse con el backend
-        console.error('Error al comprar entradas:', error);
+      return new Promise((resolve, reject) => {
+        fetch('http://localhost:8000/api/entradas', {
+          method: 'POST',
+          body: JSON.stringify(this.butacas),
+        })
+        
+          .then(response => response.json())
+          
+          .then(data => {
+            if (data.ok) {
+              this.seleccionados.forEach(asiento => {
+                asiento.ocupado = true;
+              });
+              this.actualizarSeleccionados();
+              resolve();
+            } else {
+              reject();
+            }
+            console.log(data);
+          });
       });
+      
     },
     getButacaImage(asiento) {
       if (asiento.vip) {

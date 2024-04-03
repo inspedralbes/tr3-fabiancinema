@@ -31,6 +31,7 @@ Route::get('/sesiones/{id_sesion}', function ($id_sesion) {
 });
 
 Route::get('/entradas', [EntradasController::class, 'index']);
+
 Route::post('/entradas', [EntradasController::class, 'store']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

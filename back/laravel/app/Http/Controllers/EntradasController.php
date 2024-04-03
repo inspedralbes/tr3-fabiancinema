@@ -29,9 +29,38 @@ class EntradasController extends Controller
             'columna' => 'required|integer',
             'precio' => 'required|numeric',
         ]);
-
+        
         $entrada = Entrada::create($data);
 
         return response()->json($entrada, 201);
     }
 }
+
+// {
+//     "id_sesion": 1,
+//     "fila": 3,
+//     "columna": 8,
+//     "precio": 6
+//   }
+  
+  
+//   [
+//       {
+//           "columna": 4,
+//           "fila": 5,
+//           "ocupado": true,
+//           "vip": false
+//       },
+//       {
+//           "columna": 5,
+//           "fila": 5,
+//           "ocupado": true,
+//           "vip": false
+//       },
+//       {
+//           "columna": 6,
+//           "fila": 5,
+//           "ocupado": true,
+//           "vip": false
+//       }
+//   ]
