@@ -64,29 +64,48 @@ export default {
       this.mostrarPasarela = this.seleccionados.length > 0;
     },
     comprarEntradas() {
-      return new Promise((resolve, reject) => {
-        fetch('http://localhost:8000/api/entradas', {
-          method: 'POST',
-          body: JSON.stringify(this.butacas),
-        })
-        
-          .then(response => response.json())
-          
-          .then(data => {
-            if (data.ok) {
-              this.seleccionados.forEach(asiento => {
-                asiento.ocupado = true;
-              });
-              this.actualizarSeleccionados();
-              resolve();
+      // Filtrar solo los asientos seleccionados
+      const asientosSeleccionados = this.butacas.flatMap(fila => fila.filter(asiento => asiento.ocupado));
+
+      // Verificar si solo hay un asiento seleccionado
+      if (asientosSeleccionados.length <= 10) {
+        const asiento = asientosSeleccionados[0];
+
+        // Formar el objeto de entrada directamente
+        const entrada = {
+          id_sesion: 1, // Aquí debes colocar el ID de la sesión correspondiente
+          fila: asiento.fila,
+          columna: asiento.columna,
+          precio: asiento.vip ? 8 : 6, // Seleccionar el precio según si el asiento es VIP o no
+        };
+
+        // Enviar la solicitud con el objeto de entrada directamente
+        return new Promise((resolve, reject) => {
+          fetch('http://localhost:8000/api/entradas', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(entrada),
+          }).then(response => {
+            if (response.status == 200) {
+              return response.json();
             } else {
-              reject();
+              reject('Error al comprar la entrada');
             }
-            console.log(data);
+          }).then(data => {
+            JSON.stringify(data);
+            resolve(data);
+          }).catch(error => {
+            reject(error);
           });
-      });
-      
+        });
+      } else {
+        // Si hay más de un asiento seleccionado, notificar al usuario que solo puede comprar un asiento a la vez
+        alert('Solo puedes comprar una entrada a la vez');
+      }
     },
+
     getButacaImage(asiento) {
       if (asiento.vip) {
         return asiento.ocupado ? '/butacas/butaca-vip-ocupada.jpg' : '/butacas/butaca-vip-libre.jpg';

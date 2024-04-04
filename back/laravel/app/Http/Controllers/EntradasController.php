@@ -32,7 +32,7 @@ class EntradasController extends Controller
         
         $entrada = Entrada::create($data);
 
-        return response()->json($entrada, 201);
+        return response()->json($entrada, 200);
     }
 }
 
