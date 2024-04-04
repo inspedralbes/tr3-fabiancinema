@@ -67,19 +67,18 @@ export default {
       // Filtrar solo los asientos seleccionados
       const asientosSeleccionados = this.butacas.flatMap(fila => fila.filter(asiento => asiento.ocupado));
 
-      // Verificar si solo hay un asiento seleccionado
-      if (asientosSeleccionados.length <= 10) {
-        const asiento = asientosSeleccionados[0];
+      if (asientosSeleccionados.length <= 10 && asientosSeleccionados.length > 0) {
+        let entrada = [];
 
-        // Formar el objeto de entrada directamente
-        const entrada = {
-          id_sesion: 1, // Aquí debes colocar el ID de la sesión correspondiente
-          fila: asiento.fila,
-          columna: asiento.columna,
-          precio: asiento.vip ? 8 : 6, // Seleccionar el precio según si el asiento es VIP o no
-        };
+        for (let i = 0; i < asientosSeleccionados.length; i++) {
+          entrada.push({
+            id_sesion: this.$route.params.id_pelicula,
+            fila: asientosSeleccionados[i].fila,
+            columna: asientosSeleccionados[i].columna,
+            precio: asientosSeleccionados[i].vip ? 8 : 6,
+          });
+        }
 
-        // Enviar la solicitud con el objeto de entrada directamente
         return new Promise((resolve, reject) => {
           fetch('http://localhost:8000/api/entradas', {
             method: 'POST',
@@ -101,8 +100,7 @@ export default {
           });
         });
       } else {
-        // Si hay más de un asiento seleccionado, notificar al usuario que solo puede comprar un asiento a la vez
-        alert('Solo puedes comprar una entrada a la vez');
+        alert('Puedes comprar un máximo de 10 entradas a la vez y debes seleccionar al menos una');
       }
     },
 
