@@ -28,7 +28,7 @@ export default {
   methods: {
     async obtenerSesion() {
       try {
-        console.log("BBBBBBBBBBBBBBBBBBBBB", this.$route.params.id_pelicula);
+        console.log("🇷 🇦 🇨 🇮 🇳 🇬  🇩 🇪  🇸 🇦 🇳 🇹 🇦 🇳 🇩 🇪 🇷", this.$route.params.id_pelicula);
         const response = await fetch(`http://localhost:8000/api/sesiones/${this.$route.params.id_pelicula}`);
         if (!response.ok) {
           throw new Error("No se pudo obtener la sesión");

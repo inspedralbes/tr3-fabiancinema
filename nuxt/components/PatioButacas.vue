@@ -31,7 +31,7 @@ export default {
     setInterval(this.actualizarEstadoAsientos, 5000);
   },
   methods: {
-    inicializarButacas() {
+    async inicializarButacas() {
       for (let fila = 1; fila <= 7; fila++) {
         let filaButacas = [];
         for (let asiento = 1; asiento <= 10; asiento++) {
@@ -60,18 +60,20 @@ export default {
         console.error('Error al actualizar el estado de los asientos:', error);
       }
     },
+
     async actualizarButacas(entradas) {
-      this.butacas.forEach((fila, i) => {
-        fila.forEach((asiento, j) => {
-          const entrada = entradas.find(
-            entrada => entrada.fila === i + 1 && entrada.columna === j + 1
-          );
-          if (entrada) {
-            asiento.ocupado = true;
+      const idSesionActual = this.$route.params.id_pelicula;
+      entradas.forEach(entrada => {
+        if (entrada.id_sesion == idSesionActual) {
+          const fila = entrada.fila - 1;
+          const columna = entrada.columna - 1;
+          if (fila >= 0 && fila < this.butacas.length && columna >= 0 && columna < this.butacas[fila].length) {
+            this.butacas[fila][columna].ocupado = true;
           }
-        });
+        }
       });
     },
+
     toggleAsiento(asiento) {
       if (!asiento.ocupado) {
         asiento.ocupado = !asiento.ocupado;
@@ -80,6 +82,7 @@ export default {
         alert('Este asiento ya está ocupado. Por favor, seleccione otro.');
       }
     },
+
     actualizarSeleccionados() {
       this.seleccionados = [];
       this.butacas.forEach(fila => {
@@ -91,6 +94,7 @@ export default {
       });
       this.mostrarPasarela = this.seleccionados.length > 0;
     },
+
     comprarEntradas() {
       const asientosSeleccionados = this.butacas.flatMap(fila => fila.filter(asiento => asiento.ocupado));
 

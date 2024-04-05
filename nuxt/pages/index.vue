@@ -28,24 +28,32 @@ export default {
   methods: {
     async obtenerPeliculas() {
       try {
-        const response = await fetch("http://localhost:8000/api/peliculas");
-        if (!response.ok) {
-          throw new Error("No se pudo obtener la lista de películas");
-        }
-        const data = await response.json();
-        this.peliculas = data;
+        fetch("http://localhost:8000/api/peliculas")
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("No se pudo obtener las películas");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            this.peliculas = data;
+          });
       } catch (error) {
         console.error("Error al obtener las películas:", error);
       }
     },
     async obtenerSesiones(idPelicula) {
       try {
-        const response = await fetch(`http://localhost:8000/api/sesiones/${idPelicula}`);
-        if (!response.ok) {
-          throw new Error("No se pudo obtener la sesión");
-        }
-        const data = await response.json();
-        return data;
+        fetch(`http://localhost:8000/api/sesiones/${idPelicula}`)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("No se pudo obtener las sesiones");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            return data;
+          });
       } catch (error) {
         console.error("Error al obtener la sesión:", error);
         return null;
