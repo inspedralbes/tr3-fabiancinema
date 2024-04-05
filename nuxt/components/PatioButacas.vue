@@ -27,6 +27,8 @@ export default {
   },
   mounted() {
     this.inicializarButacas();
+    this.actualizarEstadoAsientos();
+    setInterval(this.actualizarEstadoAsientos, 5000);
   },
   methods: {
     inicializarButacas() {
@@ -48,9 +50,35 @@ export default {
         this.butacas.push(filaButacas);
       }
     },
+
+    async actualizarEstadoAsientos() {
+      try {
+        const response = await fetch('http://localhost:8000/api/entradas');
+        const data = await response.json();
+        this.actualizarButacas(data);
+      } catch (error) {
+        console.error('Error al actualizar el estado de los asientos:', error);
+      }
+    },
+    async actualizarButacas(entradas) {
+      this.butacas.forEach((fila, i) => {
+        fila.forEach((asiento, j) => {
+          const entrada = entradas.find(
+            entrada => entrada.fila === i + 1 && entrada.columna === j + 1
+          );
+          if (entrada) {
+            asiento.ocupado = true;
+          }
+        });
+      });
+    },
     toggleAsiento(asiento) {
-      asiento.ocupado = !asiento.ocupado;
-      this.actualizarSeleccionados();
+      if (!asiento.ocupado) {
+        asiento.ocupado = !asiento.ocupado;
+        this.actualizarSeleccionados();
+      } else {
+        alert('Este asiento ya está ocupado. Por favor, seleccione otro.');
+      }
     },
     actualizarSeleccionados() {
       this.seleccionados = [];
@@ -64,7 +92,6 @@ export default {
       this.mostrarPasarela = this.seleccionados.length > 0;
     },
     comprarEntradas() {
-      // Filtrar solo los asientos seleccionados
       const asientosSeleccionados = this.butacas.flatMap(fila => fila.filter(asiento => asiento.ocupado));
 
       if (asientosSeleccionados.length <= 10 && asientosSeleccionados.length > 0) {

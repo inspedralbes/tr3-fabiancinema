@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('entradas', function (Blueprint $table) {
             $table->id('id_entrada')->autoIncrement();
             $table->unsignedBigInteger('id_sesion');
-            $table->string('fila');
+            $table->integer('fila');
             $table->integer('columna');
             $table->integer('precio');
             $table->timestamps();
