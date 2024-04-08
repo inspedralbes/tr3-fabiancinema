@@ -128,6 +128,7 @@ export default {
             body: JSON.stringify(entrada),
           }).then(response => {
             if (response.status == 200) {
+              console.log('🇸 🇵 🇴 🇷 🇹 🇮 🇳 🇬  🇩 🇪  🇬 🇮 🇯 🇴 🇳');
               return response.json();
             } else {
               reject('Error al comprar la entrada');
@@ -155,7 +156,7 @@ export default {
   computed: {
     total() {
       let total = 0;
-      this.seleccionados.forEach(asiento => {
+      this.asientosTemporalesSeleccionados.forEach(asiento => {
         total += asiento.vip ? 8 : 6;
       });
       return total;
