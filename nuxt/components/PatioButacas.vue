@@ -22,6 +22,7 @@ export default {
     return {
       butacas: [],
       seleccionados: [],
+      asientosTemporalesSeleccionados: [],
       mostrarPasarela: false,
     };
   },
@@ -77,9 +78,17 @@ export default {
     toggleAsiento(asiento) {
       if (!asiento.ocupado) {
         asiento.ocupado = !asiento.ocupado;
+        this.asientosTemporalesSeleccionados.push(asiento);
         this.actualizarSeleccionados();
-      } else {
+      } else if (!this.asientosTemporalesSeleccionados.includes(asiento)) {
         alert('Este asiento ya está ocupado. Por favor, seleccione otro.');
+      } else {
+        asiento.ocupado = !asiento.ocupado;
+        const index = this.asientosTemporalesSeleccionados.indexOf(asiento);
+        if (index > -1) {
+          this.asientosTemporalesSeleccionados.splice(index, 1);
+        }
+        this.actualizarSeleccionados();
       }
     },
 
