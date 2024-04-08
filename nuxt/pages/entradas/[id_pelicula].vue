@@ -29,7 +29,7 @@ export default {
     async obtenerSesion() {
       try {
         console.log("🇷 🇦 🇨 🇮 🇳 🇬  🇩 🇪  🇸 🇦 🇳 🇹 🇦 🇳 🇩 🇪 🇷", this.$route.params.id_pelicula);
-        const response = await fetch(`http://localhost:8000/api/sesiones/${this.$route.params.id_pelicula}`);
+        const response = await fetch(`http://fabiancine.a21fabrolfer.daw.inspedralbes.cat/back/laravel/public/api/sesiones/${this.$route.params.id_pelicula}`);
         if (!response.ok) {
           throw new Error("No se pudo obtener la sesión");
         }

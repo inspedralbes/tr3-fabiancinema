@@ -54,7 +54,7 @@ export default {
 
     async actualizarEstadoAsientos() {
       try {
-        const response = await fetch('http://localhost:8000/api/entradas');
+        const response = await fetch('http://fabiancine.a21fabrolfer.daw.inspedralbes.cat/back/laravel/public/api/entradas');
         const data = await response.json();
         this.actualizarButacas(data);
       } catch (error) {
@@ -120,7 +120,7 @@ export default {
         }
 
         return new Promise((resolve, reject) => {
-          fetch('http://localhost:8000/api/entradas', {
+          fetch('http://fabiancine.a21fabrolfer.daw.inspedralbes.cat/back/laravel/public/api/entradas', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

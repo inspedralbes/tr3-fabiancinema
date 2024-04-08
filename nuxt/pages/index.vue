@@ -28,7 +28,7 @@ export default {
   methods: {
     async obtenerPeliculas() {
       try {
-        fetch("http://localhost:8000/api/peliculas")
+        fetch("http://fabiancine.a21fabrolfer.daw.inspedralbes.cat/back/laravel/public/api/peliculas")
           .then((response) => {
             if (!response.ok) {
               throw new Error("No se pudo obtener las películas");
@@ -44,7 +44,7 @@ export default {
     },
     async obtenerSesiones(idPelicula) {
       try {
-        fetch(`http://localhost:8000/api/sesiones/${idPelicula}`)
+        fetch(`http://fabiancine.a21fabrolfer.daw.inspedralbes.cat/back/laravel/public/api/sesiones/${idPelicula}`)
           .then((response) => {
             if (!response.ok) {
               throw new Error("No se pudo obtener las sesiones");
