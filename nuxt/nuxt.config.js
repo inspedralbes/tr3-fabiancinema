@@ -3,6 +3,10 @@ export default defineNuxtConfig({
     modules: [
         '@pinia/nuxt',
     ],
+    css: [
+    'normalize.css', // Aquí agregas la ruta de Normalize CSS
+    // Otros estilos que desees incluir en tu aplicación
+  ],
     serverMiddleware: [
         function (req, res, next) {
             // Configuración de los encabezados CORS

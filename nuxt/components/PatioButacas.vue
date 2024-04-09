@@ -1,11 +1,9 @@
 <template>
-  <div class="container">
-    <div class="patio-butacas">
-      <div v-for="fila in 7" :key="fila" class="fila">
-        <div v-for="(asiento, index) in butacas[fila - 1]" :key="`fila-${fila}-asiento-${index + 1}`" class="asiento"
-          :class="{ vip: asiento.vip, ocupado: asiento.ocupado }" @click="toggleAsiento(asiento)">
-          <img :src="getButacaImage(asiento)" :alt="'Asiento ' + (asiento.vip ? 'VIP' : 'Normal')" />
-        </div>
+  <div class="patio-butacas">
+    <div v-for="fila in 7" :key="fila" class="fila">
+      <div v-for="(asiento, index) in butacas[fila - 1]" :key="`fila-${fila}-asiento-${index + 1}`" class="asiento"
+        :class="{ vip: asiento.vip, ocupado: asiento.ocupado }" @click="toggleAsiento(asiento)">
+        <img :src="getButacaImage(asiento)" :alt="'Asiento ' + (asiento.vip ? 'VIP' : 'Normal')" />
       </div>
     </div>
     <div class="pasarela-compra" v-if="mostrarPasarela">
@@ -17,6 +15,9 @@
 </template>
 
 <script>
+import { actualizarEstadoAsientos } from '../services/communicationManager';
+import { comprarEntradas } from '../services/communicationManager';
+
 export default {
   data() {
     return {
@@ -28,7 +29,12 @@ export default {
   },
   mounted() {
     this.inicializarButacas();
-    this.actualizarEstadoAsientos();
+    actualizarEstadoAsientos(this.$route.params.id_pelicula).then(data => {
+      this.actualizarButacas(data);
+    });
+    comprarEntradas(this.$route.params.id_pelicula).then(data => {
+      this.actualizarButacas(data);
+    });
     setInterval(this.actualizarEstadoAsientos, 5000);
   },
   methods: {
@@ -49,15 +55,6 @@ export default {
           });
         }
         this.butacas.push(filaButacas);
-      }
-    },
-    async actualizarEstadoAsientos() {
-      try {
-        const response = await fetch('http://localhost:8000/api/entradas');
-        const data = await response.json();
-        this.actualizarButacas(data);
-      } catch (error) {
-        console.error('Error al actualizar el estado de los asientos:', error);
       }
     },
     async actualizarButacas(entradas) {
@@ -112,29 +109,29 @@ export default {
           });
         }
 
-        return new Promise((resolve, reject) => {
-          fetch('http://localhost:8000/api/entradas', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(entrada),
-          }).then(response => {
-            if (response.status == 200) {
-              console.log('🇸 🇵 🇴 🇷 🇹 🇮 🇳 🇬  🇩 🇪  🇬 🇮 🇯 🇴 🇳');
-              alert('Entradas compradas correctamente');
-              this.$router.push('/');
-              return response.json();
-            } else {
-              reject('Error al comprar la entrada');
-            }
-          }).then(data => {
-            JSON.stringify(data);
-            resolve(data);
-          }).catch(error => {
-            reject(error);
-          });
-        });
+        // return new Promise((resolve, reject) => {
+        //   fetch('http://localhost:8000/api/entradas', {
+        //     method: 'POST',
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify(entrada),
+        //   }).then(response => {
+        //     if (response.status == 200) {
+        //       console.log('🇸 🇵 🇴 🇷 🇹 🇮 🇳 🇬  🇩 🇪  🇬 🇮 🇯 🇴 🇳');
+        //       alert('Entradas compradas correctamente');
+        //       this.$router.push('/');
+        //       return response.json();
+        //     } else {
+        //       reject('Error al comprar la entrada');
+        //     }
+        //   }).then(data => {
+        //     JSON.stringify(data);
+        //     resolve(data);
+        //   }).catch(error => {
+        //     reject(error);
+        //   });
+        // });
       } else {
         alert('Puedes comprar un máximo de 10 entradas a la vez y debes seleccionar al menos una');
       }
@@ -160,10 +157,6 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  display: flex;
-}
-
 .patio-butacas {
   display: flex;
   flex-direction: column;
@@ -172,6 +165,8 @@ export default {
 
 .fila {
   display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
 }
 
 .asiento {
@@ -183,6 +178,7 @@ export default {
 }
 
 .pasarela-compra {
-  margin-left: 20px;
+  margin-top: 20px;
+  text-align: center;
 }
 </style>

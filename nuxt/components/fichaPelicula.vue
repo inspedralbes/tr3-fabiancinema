@@ -1,13 +1,10 @@
 <template>
-  <div v-if="pelicula">
-    <div class="info-pelicula">
-      <img :src="pelicula.portada" :alt="pelicula.titulo" class="cover-image" />
-      <div class="movie-details">
-        <h2 class="movie-title">{{ pelicula.titulo }}</h2>
-        <h3 class="movie-subtitle">{{ calcularDuracion(pelicula.duracion) }}</h3>
-        <p class="movie-info">{{ pelicula.fecha }}</p>
-        <fichaSesion :sesion="sesion" :pelicula="pelicula" class="ficha-sesion" />
-      </div>
+  <div class="pelicula-info">
+    <img :src="pelicula.portada" :alt="pelicula.titulo" class="cover-image" />
+    <div class="details">
+      <h2 class="movie-title">{{ pelicula.titulo }}</h2>
+      <h3 class="movie-subtitle">{{ calcularDuracion(pelicula.duracion) }}</h3>
+      <p class="movie-info">{{ pelicula.fecha }}</p>
     </div>
   </div>
 </template>
@@ -19,70 +16,56 @@ export default {
       type: Object,
       required: true,
     },
-    sesion: {
-      type: Object,
-      required: true,
-    },
   },
   methods: {
     calcularDuracion(duracion) {
       const horas = Math.floor(duracion / 60);
       const minutos = duracion % 60;
-
       if (horas === 0) {
-        return `${minutos > 0 ? minutos + 'min' : ''}`;
+        return `${minutos} min`;
       } else {
-        return `${horas}h ${minutos > 0 ? minutos + 'min' : ''}`;
+        return `${horas}h ${minutos} min`;
       }
-    }
+    },
   },
-}
+};
 </script>
 
-<style>
-.info-pelicula {
+<style scoped>
+.pelicula-info {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 100%;
-}
-
-.pelicula:hover {
-  transform: translateY(-5px);
+  margin-bottom: 20px;
+  padding: 20px;
+  transition: transform 0.3s ease;
 }
 
 .cover-image {
-  width: 16vw;
-  height: 46vh;
-  border-radius: 5px 5px 5px 5px;
-  margin-right: 1vh;
-  margin-left: 1vh;
-  margin-top: 1vh;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 20px;
 }
 
-.movie-details {
-  padding: 10px;
-  margin-bottom: 10px;
-  margin-top: 2vh;
+.details {
+  width: 100%;
+  text-align: center;
 }
 
 .movie-title {
-  font-size: 1.2rem;
-  margin-top: 5px;
+  font-size: 1.5rem;
+  margin-bottom: 5px;
 }
 
 .movie-subtitle {
-  font-size: 1rem;
-  margin-top: 0;
+  font-size: 1.2rem;
+  margin-bottom: 5px;
 }
 
 .movie-info {
-  margin-bottom: -5px;
-}
-
-.movie-link {
-  color: inherit;
-  text-decoration: none;
+  font-size: 1rem;
+  margin-bottom: 5px;
 }
 </style>
