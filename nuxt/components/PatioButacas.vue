@@ -51,7 +51,6 @@ export default {
         this.butacas.push(filaButacas);
       }
     },
-
     async actualizarEstadoAsientos() {
       try {
         const response = await fetch('http://localhost:8000/api/entradas');
@@ -61,7 +60,6 @@ export default {
         console.error('Error al actualizar el estado de los asientos:', error);
       }
     },
-
     async actualizarButacas(entradas) {
       const idSesionActual = this.$route.params.id_pelicula;
       entradas.forEach(entrada => {
@@ -74,7 +72,6 @@ export default {
         }
       });
     },
-
     toggleAsiento(asiento) {
       if (!asiento.ocupado) {
         asiento.ocupado = !asiento.ocupado;
@@ -91,7 +88,6 @@ export default {
         this.actualizarSeleccionados();
       }
     },
-
     actualizarSeleccionados() {
       this.seleccionados = [];
       this.butacas.forEach(fila => {
@@ -103,19 +99,16 @@ export default {
       });
       this.mostrarPasarela = this.seleccionados.length > 0;
     },
-
     comprarEntradas() {
-      const asientosSeleccionados = this.butacas.flatMap(fila => fila.filter(asiento => asiento.ocupado));
-
-      if (asientosSeleccionados.length <= 10 && asientosSeleccionados.length > 0) {
+      if (this.asientosTemporalesSeleccionados.length <= 10 && this.asientosTemporalesSeleccionados.length > 0) {
         let entrada = [];
 
-        for (let i = 0; i < asientosSeleccionados.length; i++) {
+        for (let i = 0; i < this.asientosTemporalesSeleccionados.length; i++) {
           entrada.push({
             id_sesion: this.$route.params.id_pelicula,
-            fila: asientosSeleccionados[i].fila,
-            columna: asientosSeleccionados[i].columna,
-            precio: asientosSeleccionados[i].vip ? 8 : 6,
+            fila: this.asientosTemporalesSeleccionados[i].fila,
+            columna: this.asientosTemporalesSeleccionados[i].columna,
+            precio: this.asientosTemporalesSeleccionados[i].vip ? 8 : 6,
           });
         }
 
@@ -129,6 +122,8 @@ export default {
           }).then(response => {
             if (response.status == 200) {
               console.log('🇸 🇵 🇴 🇷 🇹 🇮 🇳 🇬  🇩 🇪  🇬 🇮 🇯 🇴 🇳');
+              alert('Entradas compradas correctamente');
+              this.$router.push('/');
               return response.json();
             } else {
               reject('Error al comprar la entrada');
@@ -144,7 +139,6 @@ export default {
         alert('Puedes comprar un máximo de 10 entradas a la vez y debes seleccionar al menos una');
       }
     },
-
     getButacaImage(asiento) {
       if (asiento.vip) {
         return asiento.ocupado ? '/butacas/butaca-vip-ocupada.jpg' : '/butacas/butaca-vip-libre.jpg';
