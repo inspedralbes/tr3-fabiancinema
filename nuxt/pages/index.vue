@@ -17,7 +17,7 @@
 
 <script>
 import Header from '@/components/Header.vue';
-import FichaPelicula from '@/components/FichaPelicula.vue';
+import FichaPelicula from '@/components/fichaPelicula.vue';
 import { useStore } from '../stores/store';
 import { obtenerPeliculas } from '../services/communicationManager';
 
