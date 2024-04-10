@@ -15,8 +15,7 @@
 </template>
 
 <script>
-import { actualizarEstadoAsientos } from '../services/communicationManager';
-import { comprarEntradas } from '../services/communicationManager';
+import { actualizarEstadoAsientos, comprarEntradas } from '../services/communicationManager';
 
 export default {
   data() {
@@ -32,10 +31,11 @@ export default {
     actualizarEstadoAsientos(this.$route.params.id_pelicula).then(data => {
       this.actualizarButacas(data);
     });
-    comprarEntradas(this.$route.params.id_pelicula).then(data => {
-      this.actualizarButacas(data);
-    });
-    setInterval(this.actualizarEstadoAsientos, 5000);
+    setInterval(() => {
+      actualizarEstadoAsientos(this.$route.params.id_pelicula).then(data => {
+        this.actualizarButacas(data);
+      });
+    }, 5000);
   },
   methods: {
     async inicializarButacas() {
@@ -98,10 +98,10 @@ export default {
     },
     comprarEntradas() {
       if (this.asientosTemporalesSeleccionados.length <= 10 && this.asientosTemporalesSeleccionados.length > 0) {
-        let entrada = [];
+        let entradas = [];
 
         for (let i = 0; i < this.asientosTemporalesSeleccionados.length; i++) {
-          entrada.push({
+          entradas.push({
             id_sesion: this.$route.params.id_pelicula,
             fila: this.asientosTemporalesSeleccionados[i].fila,
             columna: this.asientosTemporalesSeleccionados[i].columna,
@@ -109,29 +109,15 @@ export default {
           });
         }
 
-        // return new Promise((resolve, reject) => {
-        //   fetch('http://localhost:8000/api/entradas', {
-        //     method: 'POST',
-        //     headers: {
-        //       'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(entrada),
-        //   }).then(response => {
-        //     if (response.status == 200) {
-        //       console.log('🇸 🇵 🇴 🇷 🇹 🇮 🇳 🇬  🇩 🇪  🇬 🇮 🇯 🇴 🇳');
-        //       alert('Entradas compradas correctamente');
-        //       this.$router.push('/');
-        //       return response.json();
-        //     } else {
-        //       reject('Error al comprar la entrada');
-        //     }
-        //   }).then(data => {
-        //     JSON.stringify(data);
-        //     resolve(data);
-        //   }).catch(error => {
-        //     reject(error);
-        //   });
-        // });
+        comprarEntradas(entradas)
+          .then(data => {
+            console.log('Entradas compradas correctamente');
+            this.$router.push('/');
+          })
+          .catch(error => {
+            alert('Error al comprar las entradas');
+            console.error(error);
+          });
       } else {
         alert('Puedes comprar un máximo de 10 entradas a la vez y debes seleccionar al menos una');
       }

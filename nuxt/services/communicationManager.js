@@ -1,5 +1,4 @@
 const url = 'http://localhost:8000/api';
-// const url = 'http://fabiancine.a21fabrolfer.daw.inspedralbes.cat/back/laravel/public/api';
 
 export function obtenerPeliculas() {
     return new Promise((resolve, reject) => {
@@ -49,7 +48,6 @@ export function actualizarEstadoAsientos(id) {
                 }
             }).then(data => {
                 JSON.stringify(data);
-                console.log("🇦 🇸 🇮 🇪 🇳 🇹 🇴 🇸 🇴 🇨 🇺 🇵 🇦 🇩 🇴 🇸", data);
                 resolve(data);
             }).catch(error => {
                 reject(error);
@@ -58,6 +56,7 @@ export function actualizarEstadoAsientos(id) {
 }
 
 export function comprarEntradas(data) {
+    console.log("🇩 🇦 🇹 🇦 🇸", data);
     return new Promise((resolve, reject) => {
         fetch(`${url}/entradas`, {
             method: 'POST',
