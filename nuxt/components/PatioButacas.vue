@@ -1,11 +1,9 @@
 <template>
-  <div class="container">
-    <div class="patio-butacas">
-      <div v-for="fila in 7" :key="fila" class="fila">
-        <div v-for="(asiento, index) in butacas[fila - 1]" :key="`fila-${fila}-asiento-${index + 1}`" class="asiento"
-          :class="{ vip: asiento.vip, ocupado: asiento.ocupado }" @click="toggleAsiento(asiento)">
-          <img :src="getButacaImage(asiento)" :alt="'Asiento ' + (asiento.vip ? 'VIP' : 'Normal')" />
-        </div>
+  <div class="patio-butacas">
+    <div v-for="fila in 7" :key="fila" class="fila">
+      <div v-for="(asiento, index) in butacas[fila - 1]" :key="`fila-${fila}-asiento-${index + 1}`" class="asiento"
+        :class="{ vip: asiento.vip, ocupado: asiento.ocupado }" @click="toggleAsiento(asiento)">
+        <img :src="getButacaImage(asiento)" :alt="'Asiento ' + (asiento.vip ? 'VIP' : 'Normal')" />
       </div>
     </div>
     <div class="pasarela-compra" v-if="mostrarPasarela">
@@ -17,6 +15,8 @@
 </template>
 
 <script>
+import { actualizarEstadoAsientos, comprarEntradas } from '../services/communicationManager';
+
 export default {
   data() {
     return {
@@ -28,8 +28,14 @@ export default {
   },
   mounted() {
     this.inicializarButacas();
-    this.actualizarEstadoAsientos();
-    setInterval(this.actualizarEstadoAsientos, 5000);
+    actualizarEstadoAsientos(this.$route.params.id_pelicula).then(data => {
+      this.actualizarButacas(data);
+    });
+    setInterval(() => {
+      actualizarEstadoAsientos(this.$route.params.id_pelicula).then(data => {
+        this.actualizarButacas(data);
+      });
+    }, 5000);
   },
   methods: {
     async inicializarButacas() {
@@ -51,17 +57,6 @@ export default {
         this.butacas.push(filaButacas);
       }
     },
-
-    async actualizarEstadoAsientos() {
-      try {
-        const response = await fetch('http://fabiancine.a21fabrolfer.daw.inspedralbes.cat/back/laravel/public/api/entradas');
-        const data = await response.json();
-        this.actualizarButacas(data);
-      } catch (error) {
-        console.error('Error al actualizar el estado de los asientos:', error);
-      }
-    },
-
     async actualizarButacas(entradas) {
       const idSesionActual = this.$route.params.id_pelicula;
       entradas.forEach(entrada => {
@@ -74,7 +69,6 @@ export default {
         }
       });
     },
-
     toggleAsiento(asiento) {
       if (!asiento.ocupado) {
         asiento.ocupado = !asiento.ocupado;
@@ -91,7 +85,6 @@ export default {
         this.actualizarSeleccionados();
       }
     },
-
     actualizarSeleccionados() {
       this.seleccionados = [];
       this.butacas.forEach(fila => {
@@ -103,47 +96,32 @@ export default {
       });
       this.mostrarPasarela = this.seleccionados.length > 0;
     },
-
     comprarEntradas() {
-      const asientosSeleccionados = this.butacas.flatMap(fila => fila.filter(asiento => asiento.ocupado));
+      if (this.asientosTemporalesSeleccionados.length <= 10 && this.asientosTemporalesSeleccionados.length > 0) {
+        let entradas = [];
 
-      if (asientosSeleccionados.length <= 10 && asientosSeleccionados.length > 0) {
-        let entrada = [];
-
-        for (let i = 0; i < asientosSeleccionados.length; i++) {
-          entrada.push({
+        for (let i = 0; i < this.asientosTemporalesSeleccionados.length; i++) {
+          entradas.push({
             id_sesion: this.$route.params.id_pelicula,
-            fila: asientosSeleccionados[i].fila,
-            columna: asientosSeleccionados[i].columna,
-            precio: asientosSeleccionados[i].vip ? 8 : 6,
+            fila: this.asientosTemporalesSeleccionados[i].fila,
+            columna: this.asientosTemporalesSeleccionados[i].columna,
+            precio: this.asientosTemporalesSeleccionados[i].vip ? 8 : 6,
           });
         }
 
-        return new Promise((resolve, reject) => {
-          fetch('http://fabiancine.a21fabrolfer.daw.inspedralbes.cat/back/laravel/public/api/entradas', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(entrada),
-          }).then(response => {
-            if (response.status == 200) {
-              return response.json();
-            } else {
-              reject('Error al comprar la entrada');
-            }
-          }).then(data => {
-            JSON.stringify(data);
-            resolve(data);
-          }).catch(error => {
-            reject(error);
+        comprarEntradas(entradas)
+          .then(data => {
+            console.log('Entradas compradas correctamente');
+            this.$router.push('/');
+          })
+          .catch(error => {
+            alert('Error al comprar las entradas');
+            console.error(error);
           });
-        });
       } else {
         alert('Puedes comprar un máximo de 10 entradas a la vez y debes seleccionar al menos una');
       }
     },
-
     getButacaImage(asiento) {
       if (asiento.vip) {
         return asiento.ocupado ? '/butacas/butaca-vip-ocupada.jpg' : '/butacas/butaca-vip-libre.jpg';
@@ -155,7 +133,7 @@ export default {
   computed: {
     total() {
       let total = 0;
-      this.seleccionados.forEach(asiento => {
+      this.asientosTemporalesSeleccionados.forEach(asiento => {
         total += asiento.vip ? 8 : 6;
       });
       return total;
@@ -165,10 +143,6 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  display: flex;
-}
-
 .patio-butacas {
   display: flex;
   flex-direction: column;
@@ -177,6 +151,8 @@ export default {
 
 .fila {
   display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
 }
 
 .asiento {
@@ -188,6 +164,7 @@ export default {
 }
 
 .pasarela-compra {
-  margin-left: 20px;
+  margin-top: 20px;
+  text-align: center;
 }
 </style>
