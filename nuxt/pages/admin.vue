@@ -27,8 +27,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="portada" class="form-label">URL de la imagen:</label>
-                    <input type="text" id="portada" v-model="nuevaPelicula.portada" required class="form-input">
+                    <label for="portada" class="form-label">Seleccionar imagen:</label>
+                    <input type="file" id="portada" @change="handleImageChange" class="form-input">
                 </div>
 
                 <button type="submit" class="form-button primary-button">Crear Película</button>
@@ -72,6 +72,11 @@
                 <div class="form-group">
                     <label for="duracion" class="form-label">Duración (minutos):</label>
                     <input type="number" id="duracion" v-model="peliculaEditando.duracion" required class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label for="portada" class="form-label">Imagen:</label>
+                    <input type="file" id="portada" @change="onFileChange" class="form-input">
                 </div>
 
                 <div class="form-buttons">
@@ -126,6 +131,12 @@ export default {
         },
         async actualizarPelicula() {
             try {
+                if (this.selectedFile) {
+                    // Si se ha seleccionado un archivo, primero sube la imagen
+                    const imagenUrl = await this.subirImagen(this.selectedFile);
+                    this.peliculaEditando.portada = imagenUrl;
+                }
+
                 await actualizarPelicula(this.peliculaEditando.id_pelicula, this.peliculaEditando);
                 this.peliculaEditando = null;
                 await this.obtenerPeliculas();
