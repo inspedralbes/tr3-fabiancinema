@@ -26,6 +26,11 @@
                     <input type="number" id="duracion" v-model="nuevaPelicula.duracion" required class="form-input">
                 </div>
 
+                <div class="form-group">
+                    <label for="portada" class="form-label">URL de la imagen:</label>
+                    <input type="text" id="portada" v-model="nuevaPelicula.portada" required class="form-input">
+                </div>
+
                 <button type="submit" class="form-button primary-button">Crear Película</button>
             </form>
         </div>
@@ -35,7 +40,8 @@
             <h2 class="list-heading">Listado de Películas</h2>
             <ul class="list">
                 <li v-for="pelicula in peliculas" :key="pelicula.id_pelicula" class="list-item">
-                    {{ pelicula.titulo }}
+                    <img :src="pelicula.portada" alt="Portada de la película" class="pelicula-portada">
+                    <span class="pelicula-titulo">{{ pelicula.titulo }}</span>
                     <div class="list-buttons">
                         <button @click="editarPelicula(pelicula)" class="list-button edit-button">Editar</button>
                         <button @click="eliminarPelicula(pelicula)" class="list-button delete-button">Eliminar</button>
@@ -79,8 +85,7 @@
 
 <script>
 // Importa las funciones desde communicationManager.js
-import { obtenerPeliculas, obtenerSesion, actualizarEstadoAsientos, comprarEntradasFetch, crearPelicula, actualizarPelicula, eliminarPelicula } from '../services/communicationManager';
-
+import { obtenerPeliculas, crearPelicula, actualizarPelicula, eliminarPelicula } from '../services/communicationManager';
 
 export default {
     data() {
@@ -90,9 +95,10 @@ export default {
                 titulo: '',
                 director: '',
                 genero: '',
-                duracion: null
+                duracion: null,
+                portada: '',
             },
-            peliculaEditando: null
+            peliculaEditando: null,
         };
     },
     async mounted() {
@@ -109,13 +115,13 @@ export default {
         async crearPelicula() {
             try {
                 await crearPelicula(this.nuevaPelicula);
-                this.nuevaPelicula = { titulo: '', director: '', genero: '', duracion: null };
+                this.nuevaPelicula = { titulo: '', director: '', genero: '', duracion: null, portada: '' };
                 await this.obtenerPeliculas();
             } catch (error) {
                 console.error('Error al crear la película:', error);
             }
         },
-        editarPelicula(pelicula) {
+        async editarPelicula(pelicula) {
             this.peliculaEditando = { ...pelicula };
         },
         async actualizarPelicula() {
@@ -137,8 +143,8 @@ export default {
         },
         cancelarEdicion() {
             this.peliculaEditando = null;
-        }
-    }
+        },
+    },
 };
 </script>
 
@@ -184,7 +190,8 @@ export default {
 
 .form-button {
     margin-top: 10px;
-    margin-right: 10px; /* Separación entre botones */
+    margin-right: 10px;
+    /* Separación entre botones */
     padding: 8px 16px;
     background-color: #007bff;
     color: #fff;
@@ -244,5 +251,11 @@ export default {
 .list-button:hover {
     background-color: #dc3545;
     color: #fff;
+}
+
+.pelicula-portada {
+    width: 100px;
+    height: auto;
+    margin-right: 10px;
 }
 </style>
