@@ -9,13 +9,13 @@
     <div class="pasarela-compra" v-if="mostrarPasarela">
       <h2>Detalles de la compra</h2>
       <p>Total: {{ total }}€</p>
-      <button @click="comprarEntradas">Comprar</button>
+      <button @click="solicitarCorreoYComprar">Comprar</button>
     </div>
   </div>
 </template>
 
 <script>
-import { actualizarEstadoAsientos, comprarEntradas } from '../services/communicationManager';
+import { actualizarEstadoAsientos, comprarEntradasFetch } from '../services/communicationManager';
 
 export default {
   data() {
@@ -24,6 +24,7 @@ export default {
       seleccionados: [],
       asientosTemporalesSeleccionados: [],
       mostrarPasarela: false,
+      correoElectronico: '',
     };
   },
   mounted() {
@@ -96,7 +97,14 @@ export default {
       });
       this.mostrarPasarela = this.seleccionados.length > 0;
     },
-    comprarEntradas() {
+    async solicitarCorreoYComprar() {
+      const correo = prompt('Por favor, ingresa tu correo electrónico:');
+      if (correo) {
+        this.correoElectronico = correo;
+        await this.comprarEntradas(); // Llamar al método comprarEntradas después de obtener el correo
+      }
+    },
+    async comprarEntradas() {
       if (this.asientosTemporalesSeleccionados.length <= 10 && this.asientosTemporalesSeleccionados.length > 0) {
         let entradas = [];
 
@@ -106,22 +114,41 @@ export default {
             fila: this.asientosTemporalesSeleccionados[i].fila,
             columna: this.asientosTemporalesSeleccionados[i].columna,
             precio: this.asientosTemporalesSeleccionados[i].vip ? 8 : 6,
+            correo: this.correoElectronico,
           });
         }
 
-        comprarEntradas(entradas)
-          .then(data => {
-            console.log('Entradas compradas correctamente');
-            this.$router.push('/');
-          })
-          .catch(error => {
-            alert('Error al comprar las entradas');
-            console.error(error);
-          });
+        try {
+          await comprarEntradasFetch(entradas);
+          console.log('Entradas compradas correctamente');
+          // this.enviarCorreoConfirmacion(this.correoElectronico);
+          this.$router.push('/');
+        } catch (error) {
+          alert('Error al comprar las entradas');
+          console.error(error);
+        }
       } else {
         alert('Puedes comprar un máximo de 10 entradas a la vez y debes seleccionar al menos una');
       }
     },
+    // async enviarCorreoConfirmacion(correoElectronico) {
+    //   try {
+    //     const response = await fetch(`${url}/enviar-correo`, {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json'
+    //       },
+    //       body: JSON.stringify({ correo: correoElectronico })
+    //     });
+    //     if (response.status === 200) {
+    //       console.log('Correo electrónico enviado correctamente');
+    //     } else {
+    //       console.error('Error al enviar el correo electrónico');
+    //     }
+    //   } catch (error) {
+    //     console.error('Error al enviar el correo electrónico:', error);
+    //   }
+    // },
     getButacaImage(asiento) {
       if (asiento.vip) {
         return asiento.ocupado ? '/butacas/butaca-vip-ocupada.jpg' : '/butacas/butaca-vip-libre.jpg';

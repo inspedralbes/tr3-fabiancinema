@@ -9,5 +9,5 @@ class Entrada extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id_sesion', 'fila', 'columna', 'precio'];
+    protected $fillable = ['id_sesion', 'fila', 'columna', 'precio', 'correo'];
 }

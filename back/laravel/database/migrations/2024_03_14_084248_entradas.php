@@ -14,6 +14,7 @@ return new class extends Migration
             $table->integer('fila');
             $table->integer('columna');
             $table->integer('precio');
+            $table->string('correo');
             $table->timestamps();
 
             $table->foreign('id_sesion')->references('id_sesion')->on('sesion');
