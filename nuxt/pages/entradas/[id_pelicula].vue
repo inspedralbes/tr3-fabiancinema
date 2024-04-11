@@ -64,28 +64,31 @@ export default {
 <style scoped>
 .container {
   display: grid;
-  grid-template-columns: 1fr;
-}
-
-.ficha-pelicula {
-  margin-left: 40vh;
-  margin-top: 10vw;
+  background-color: #c5c5c5;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
 }
 
 .info-peliculas {
   background-color: #c5c5c5;
   display: flex;
-  left: 1vh;
-  width: 100vw;
-  height: 95vh;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-radius: 10px;
 }
 
-.ficha-sesion {
-  margin-top: 0;
+.ficha-pelicula,
+.butacas {
+  width: 100%;
+  max-width: 600px;
+}
+
+.ficha-pelicula {
+  margin-bottom: 20px;
 }
 
 .butacas {
-  margin-left: 20vh;
-  margin-top: 10vw;
+  margin-top: 20px;
 }
 </style>

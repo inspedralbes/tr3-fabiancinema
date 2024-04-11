@@ -179,19 +179,19 @@ export default {
 .fila {
   display: flex;
   justify-content: center;
-  margin-bottom: 10px;
+  margin-bottom: 2vh;
 }
 
 .asiento {
-  margin: 5px;
+  margin: 1vw;
 }
 
 .asiento img {
-  width: 50px;
+  width: 5vw;
 }
 
 .pasarela-compra {
-  margin-top: 20px;
+  margin-top: 5vh;
   text-align: center;
 }
 </style>

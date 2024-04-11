@@ -19,12 +19,13 @@ export default {
 <style scoped>
 .session-info {
   background-color: #666;
-  padding: 10px;
-  border-radius: 5px;
+  padding: 2vh;
+  border-radius: 2vw;
 }
 
 .info-sesion {
   margin: 0;
   color: #fff;
+  font-size: 2vw;
 }
 </style>

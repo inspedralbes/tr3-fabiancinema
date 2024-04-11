@@ -43,42 +43,42 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
-  padding: 20px;
+  margin-bottom: 2vh; /* Ajuste de margen inferior */
+  padding: 2vw; /* Ajuste de padding */
   transition: transform 0.3s ease;
 }
 
 .cover-image {
-  width: 100%;
+  width: 90%; /* Ajuste de ancho de imagen */
   max-width: 300px;
   height: auto;
-  border-radius: 10px;
-  margin-bottom: 20px;
+  border-radius: 2vw; /* Ajuste de border-radius */
+  margin-bottom: 2vh; /* Ajuste de margen inferior */
   transition: filter 0.3s ease;
 }
 
 .cover-image:hover {
-  filter: brightness(0.8);
+  opacity: 0.7;
 }
 
 .details {
-  width: 100%;
+  width: 90%;
   text-align: center;
 }
 
 .movie-title {
-  font-size: 1.5rem;
-  margin-bottom: 5px;
+  font-size: 3vw;
+  margin-bottom: 2vh;
 }
 
 .movie-subtitle {
-  font-size: 1.2rem;
-  margin-bottom: 5px;
+  font-size: 2vw;
+  margin-bottom: 2vh;
 }
 
 .movie-info {
-  font-size: 1rem;
-  margin-bottom: 5px;
+  font-size: 1.5vw;
+  margin-bottom: 2vh;
 }
 
 </style>
