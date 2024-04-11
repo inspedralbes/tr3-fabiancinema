@@ -51,9 +51,15 @@ export default {
 .cover-image {
   width: 100%;
   max-width: 300px;
-  height: auto;
+  height: 50vh;
+  object-fit: cover;
   border-radius: 10px;
   margin-bottom: 20px;
+  transition: filter 0.3s ease;
+}
+
+.cover-image:hover {
+  filter: brightness(0.8);
 }
 
 .details {
@@ -75,4 +81,5 @@ export default {
   font-size: 1rem;
   margin-bottom: 5px;
 }
+
 </style>

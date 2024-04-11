@@ -4,13 +4,16 @@
       <div class="logo">
         <router-link to="/" class="logo-link">Fabian Cine</router-link>
       </div>
+      <div class="admin-link">
+        <router-link to="/login" class="admin-link">Administración</router-link>
+      </div>
     </nav>
   </header>
 </template>
 
 <script>
 export default {
-}
+};
 </script>
 
 <style scoped>
@@ -35,6 +38,15 @@ export default {
 }
 
 .logo-link:hover {
+  text-decoration: underline;
+}
+
+.admin-link {
+  color: #fff;
+  text-decoration: none;
+}
+
+.admin-link:hover {
   text-decoration: underline;
 }
 </style>
