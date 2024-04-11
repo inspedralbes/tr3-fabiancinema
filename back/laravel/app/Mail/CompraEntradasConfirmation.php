@@ -12,10 +12,14 @@ class CompraEntradasConfirmation extends Mailable
     use Queueable, SerializesModels;
 
     public $entradas;
+    public $sesion;
+    public $pelicula;
 
-    public function __construct($entradas)
+    public function __construct($entradas, $sesion, $pelicula)
     {
         $this->entradas = $entradas;
+        $this->sesion = $sesion;
+        $this->pelicula = $pelicula;
     }
 
     public function build()
