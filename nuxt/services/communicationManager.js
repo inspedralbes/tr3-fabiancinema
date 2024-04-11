@@ -1,6 +1,5 @@
 // const url = 'http://localhost:8000/api';
 const url = 'http://fabiancine.a21fabrolfer.daw.inspedralbes.cat/back/laravel/public/api';
-// const url = 'http://fabiancine.a21fabrolfer.daw.inspedralbes.cat/back/laravel/public/api';
 
 export function obtenerPeliculas() {
     return new Promise((resolve, reject) => {
