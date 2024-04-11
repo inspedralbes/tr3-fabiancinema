@@ -1,11 +1,14 @@
 <template>
-  <div class="pelicula-info">
+  <div v-if="pelicula" class="pelicula-info">
     <img :src="pelicula.portada" :alt="pelicula.titulo" class="cover-image" />
     <div class="details">
       <h2 class="movie-title">{{ pelicula.titulo }}</h2>
       <h3 class="movie-subtitle">{{ calcularDuracion(pelicula.duracion) }}</h3>
       <p class="movie-info">{{ pelicula.fecha }}</p>
     </div>
+  </div>
+  <div v-else>
+    <p>No se ha proporcionado información sobre la película.</p>
   </div>
 </template>
 
@@ -19,12 +22,16 @@ export default {
   },
   methods: {
     calcularDuracion(duracion) {
-      const horas = Math.floor(duracion / 60);
-      const minutos = duracion % 60;
-      if (horas === 0) {
-        return `${minutos} min`;
+      if (duracion) {
+        const horas = Math.floor(duracion / 60);
+        const minutos = duracion % 60;
+        if (horas === 0) {
+          return `${minutos} min`;
+        } else {
+          return `${horas}h ${minutos} min`;
+        }
       } else {
-        return `${horas}h ${minutos} min`;
+        return '';
       }
     },
   },

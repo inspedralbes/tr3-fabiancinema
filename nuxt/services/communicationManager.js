@@ -1,5 +1,6 @@
 // const url = 'http://localhost:8000/api';
 const url = 'http://fabiancine.a21fabrolfer.daw.inspedralbes.cat/back/laravel/public/api';
+// const url = 'http://fabiancine.a21fabrolfer.daw.inspedralbes.cat/back/laravel/public/api';
 
 export function obtenerPeliculas() {
     return new Promise((resolve, reject) => {
@@ -24,7 +25,7 @@ export function obtenerSesion(id) {
         fetch(`${url}/sesiones/${id}`)
             .then(response => {
                 if (response.status == 200) {
-                    console.log("🇷 🇦 🇨 🇮 🇳 🇬  🇩 🇪  🇸 🇦 🇳 🇹 🇦 🇳 🇩 🇪 🇷", id);
+                    // console.log("🇷 🇦 🇨 🇮 🇳 🇬  🇩 🇪  🇸 🇦 🇳 🇹 🇦 🇳 🇩 🇪 🇷", id);
                     return response.json();
                 } else {
                     reject('Error al obtener la sesión');
@@ -56,7 +57,7 @@ export function actualizarEstadoAsientos(id) {
     });
 }
 
-export function comprarEntradas(data) {
+export function comprarEntradasFetch(data) {
     console.log("🇩 🇦 🇹 🇦 🇸", data);
     return new Promise((resolve, reject) => {
         fetch(`${url}/entradas`, {
@@ -66,7 +67,6 @@ export function comprarEntradas(data) {
             },
             body: JSON.stringify(data)
         }).then(response => {
-            console.log("🇷 🇪 🇸 🇵 🇴 🇳 🇸 🇪", response);
             if (response.status == 200) {
                 return response.json();
             } else {
