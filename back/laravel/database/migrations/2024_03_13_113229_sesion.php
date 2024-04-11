@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('sesion', function (Blueprint $table) {
+        Schema::create('sesion', function (Blueprint $table) { // Aquí se especifica el nombre correcto de la tabla
             $table->id('id_sesion')->autoIncrement();
             $table->unsignedBigInteger('id_pelicula');
             $table->date('dia');

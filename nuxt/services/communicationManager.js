@@ -6,6 +6,7 @@ export function obtenerPeliculas() {
         fetch(`${url}/peliculas`)
             .then(response => {
                 if (response.status == 200) {
+                    console.log("🇸 🇵 🇴 🇷 🇹 🇮 🇳 🇬  🇩 🇪  🇬 🇮 🇯 🇴 🇳");
                     return response.json();
                 } else {
                     reject('Error al obtener las peliculas');
@@ -24,7 +25,7 @@ export function obtenerSesion(id) {
         fetch(`${url}/sesiones/${id}`)
             .then(response => {
                 if (response.status == 200) {
-                    // console.log("🇷 🇦 🇨 🇮 🇳 🇬  🇩 🇪  🇸 🇦 🇳 🇹 🇦 🇳 🇩 🇪 🇷", id);
+                    console.log("🇷 🇦 🇨 🇮 🇳 🇬  🇩 🇪  🇸 🇦 🇳 🇹 🇦 🇳 🇩 🇪 🇷", id);
                     return response.json();
                 } else {
                     reject('Error al obtener la sesión');
@@ -67,6 +68,7 @@ export function comprarEntradasFetch(data) {
             body: JSON.stringify(data)
         }).then(response => {
             if (response.status == 200) {
+                console.log("🇨 🇦 🇷 🇹 🇦 🇬 🇪 🇳 🇦");
                 return response.json();
             } else {
                 reject('Error al comprar las entradas');

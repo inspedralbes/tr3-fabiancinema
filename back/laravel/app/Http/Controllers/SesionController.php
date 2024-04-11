@@ -14,10 +14,10 @@ class SesionController extends Controller
     }
 
     public function show($id_sesion) {
-        $sesiones = Sesion::all()->where('id_sesion', $id_sesion)->first();
-        if (!$sesiones) {
+        $sesion = Sesion::find($id_sesion);
+        if (!$sesion) {
             return response()->json(['error' => 'Sesion no encontrada'], 404);
         }
-        return response()->json($sesiones);
+        return response()->json($sesion);
     }
 }

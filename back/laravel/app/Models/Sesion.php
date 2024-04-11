@@ -10,4 +10,18 @@ class Sesion extends Model
     use HasFactory;
 
     protected $table = 'sesion';
+
+    protected $fillable = [
+        'id_pelicula',
+        'dia',
+        'hora',
+        'dia_espectador',
+    ];
+
+    protected $primaryKey = 'id_sesion';
+
+    public function pelicula()
+    {
+        return $this->belongsTo(Pelicula::class, 'id_pelicula');
+    }
 }
