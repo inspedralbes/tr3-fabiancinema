@@ -43,42 +43,43 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 2vh; /* Ajuste de margen inferior */
-  padding: 2vw; /* Ajuste de padding */
+  margin-bottom: 20px;
+  padding: 20px;
   transition: transform 0.3s ease;
 }
 
 .cover-image {
-  width: 90%; /* Ajuste de ancho de imagen */
+  width: 100%;
   max-width: 300px;
-  height: auto;
-  border-radius: 2vw; /* Ajuste de border-radius */
-  margin-bottom: 2vh; /* Ajuste de margen inferior */
+  height: 50vh;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 20px;
   transition: filter 0.3s ease;
 }
 
 .cover-image:hover {
-  opacity: 0.7;
+  filter: brightness(0.8);
 }
 
 .details {
-  width: 90%;
+  width: 100%;
   text-align: center;
 }
 
 .movie-title {
-  font-size: 3vw;
-  margin-bottom: 2vh;
+  font-size: 1.5rem;
+  margin-bottom: 5px;
 }
 
 .movie-subtitle {
-  font-size: 2vw;
-  margin-bottom: 2vh;
+  font-size: 1.2rem;
+  margin-bottom: 5px;
 }
 
 .movie-info {
-  font-size: 1.5vw;
-  margin-bottom: 2vh;
+  font-size: 1rem;
+  margin-bottom: 5px;
 }
 
 </style>

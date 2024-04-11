@@ -9,6 +9,8 @@ class Pelicula extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'id_pelicula';
+
     protected $fillable = [
         'titulo',
         'director',
@@ -18,4 +20,9 @@ class Pelicula extends Model
         'portada',
     ];
 
+    // Relación con las sesiones
+    public function sesiones()
+    {
+        return $this->hasMany(Sesion::class, 'id_pelicula', 'id_pelicula');
+    }
 }
