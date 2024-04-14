@@ -120,7 +120,7 @@ export default {
 
         try {
           await comprarEntradasFetch(entradas);
-          console.log('Entradas compradas correctamente');
+          // console.log('Entradas compradas correctamente');S
           // this.enviarCorreoConfirmacion(this.correoElectronico);
           this.$router.push('/');
         } catch (error) {

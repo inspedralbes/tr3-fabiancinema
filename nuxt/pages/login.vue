@@ -42,7 +42,7 @@ export default {
         if (!response.ok) {
           throw new Error('Credenciales incorrectas');
         }
-        console.log('Inicio de sesión correcto');
+        // console.log('Inicio de sesión correcto');
         this.$router.push('/admin');
       } catch (error) {
         console.error('Error al iniciar sesión:', error);
